@@ -77,6 +77,7 @@
 }
 
 - (void)render {
+    // 清屏为白色
     glClearColor(1.0, 1.0, 1.0, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
     
@@ -95,9 +96,9 @@
     
     GLfloat attrArr[] =
     {
-        1.0f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f,
-        -1.0f, -0.5f, 0.0f
+        1.0f, -0.5f, 0.0f, //右下
+        0.0f, 0.5f, 0.0f,  //上
+        -1.0f, -0.5f, 0.0f //左下
     };
     
     GLuint attrBuffer;
@@ -105,12 +106,15 @@
     glBindBuffer(GL_ARRAY_BUFFER, attrBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(attrArr), attrArr, GL_STATIC_DRAW);
     
+    //获取参数位置
     GLuint position = glGetAttribLocation(self.program, "position");
     glVertexAttribPointer(position, 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat) * 3, NULL);
     glEnableVertexAttribArray(position);
     
+    //绘制三个顶点的三角形
     glDrawArrays(GL_TRIANGLES, 0, 3);
     
+    //EACAGLContext 渲染OpenGL绘制好的图像到EACAGLLayer
     [self.context presentRenderbuffer:GL_RENDERBUFFER];
 }
 
